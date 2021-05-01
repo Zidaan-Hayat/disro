@@ -6,7 +6,7 @@ const config = require('./config.json');
 
 const bot = new Client({
 	commandPrefix: config.botPrefix,
-	owner: config.ownerIds.length == 1 ? config.ownerIds[0] : config.ownerIds
+	owner: config.ownerId
 });
 
 bot.registry

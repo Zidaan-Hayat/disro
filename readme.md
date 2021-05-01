@@ -2,13 +2,23 @@
 
 Discord -> Roblox moderation system.
 
-This system **at the moment** is only able to execute moderation actions from discord to a roblox game.
+This system **only** enables discord-to-roblox moderation, it's up to you to implement roblox-to-roblox systems.
 
 
 Much bigger implementations are planned including:
 - Updating the codebase with more commands for utility usage (Like checking server data, server fps, server uptime, etc.)
 - Cleaning up of the entire codebase cause it is very messy 💀
 - Sorting the roblox-client side code allowing scripters to easily implement additional systems
+
+---
+
+## Why disro???
+
+- Web connections are socket-like
+	- A lot of systems seen may take significantly long amounts of time to execute commands on roblox, or may exhaust their HTTP calls, disro uses [long polling](https://www.pubnub.com/blog/http-long-polling/) to maintain connections for as long as possible, making sure resources aren't wasted, simultaneously assuring: 1. Near-instant command execution 2. No exhaustive HTTP calls
+- Discord bot framework makes it easy to use
+- Takes minutes to set up
+- Flexible to use on large scale games
 
 ---
 
@@ -35,9 +45,7 @@ Edit the `config.json` file.
 {
 	"botToken": "The bot token given from your application",
 	"botPrefix": "The prefix all your bot commands will use",
-	"ownerIds": [
-		"A list of all the bot owner discord IDs (As strings [wrapped in quotes] not integers!)"
-    ],
+	"ownerId": "Bot owner discord ID (As a string [wrapped in quotes] not as an integer!)",
     "serverApiKey": "The API key for your server to communicate with the roblox client, can be any random generated string",
 	"moderationRoleId": "The role ID that is required to run game moderation commands, if it's an empty string only game owners will be able to use commands"
 }
@@ -45,7 +53,7 @@ Edit the `config.json` file.
 
 ### Step 3.
 
-Copy all files in the `roblox` folder, into a location in your `ServerScriptService`
+Copy all files in the `roblox/` folder, into a location in your `ServerScriptService`
 
 The only thing you need to make sure is that the files share the same Parent (Folder, etc.)
 
@@ -64,6 +72,7 @@ Find the server a player is currently in (if they're in any)
 ### `gameservers [server ID]`
 
 With server ID: Get a list of all the players in the server
+
 Without server ID: Get a list of all the current game servers
 
 ### `gamekick <username> <reason>`
@@ -94,7 +103,7 @@ The module to handle all this is in `roblox/banStore`
 
 ### How do I implement my own ban handling/storage system?
 
-Go to `roblox/modFunctions` and you can adjust/re-do the "handle" prefixed functions as you wish, given the arguments they receive
+Go to `roblox/modFunctions` and you can adjust/re-do the "handleBan" function as you wish
 
 ---
 
